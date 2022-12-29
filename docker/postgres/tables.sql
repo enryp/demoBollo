@@ -7,12 +7,12 @@ CREATE SEQUENCE public.veicoli_seq
 	NO CYCLE;
 
 CREATE TABLE public.veicolo (
-	id int4 NOT NULL DEFAULT nextval('veicoli_seq'::regclass),
-	targa varchar NULL,
+	targa varchar NOT NULL,
 	tipo varchar NULL,
 	codice_fiscale varchar NULL,
 	cilindrata int4 NULL,
 	immatricolazione timestamp NULL,
-	CONSTRAINT veicolo_pk PRIMARY KEY (id)
+	id_user varchar NULL,
+	CONSTRAINT veicolo_pk PRIMARY KEY (targa)
 );
 
