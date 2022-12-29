@@ -9,7 +9,6 @@ public class VeicoloMapper {
 	
 	public VeicoloDto getDto(Veicolo v) {
 		VeicoloDto vDto = new VeicoloDto();
-		vDto.setId(v.getId());
 		vDto.setCilindrata(v.getCilindrata());
 		vDto.setTarga(v.getTarga());
 		vDto.setCodiceFiscale(v.getCodiceFiscale());
@@ -20,9 +19,6 @@ public class VeicoloMapper {
 	
 	public Veicolo getEntity(VeicoloDto vDto) {
 		Veicolo vEnt = new Veicolo();
-		if(vDto.getId() != null) {
-			vEnt.setId(vDto.getId());
-		}
 		vEnt.setCilindrata(vDto.getCilindrata());
 		vEnt.setTarga(vDto.getTarga());
 		vEnt.setCodiceFiscale(vDto.getCodiceFiscale());

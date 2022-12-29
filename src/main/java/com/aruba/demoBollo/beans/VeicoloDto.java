@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 public class VeicoloDto {
 	
-	private Integer id;
+
 
 	private String targa;
 	
@@ -30,7 +30,6 @@ public class VeicoloDto {
 	
 	public Veicolo toEntity(VeicoloDto vDto) {
 		Veicolo v = new Veicolo();
-        v.setId(id);
         return v;
     }
 

@@ -49,14 +49,14 @@ public class VeicoloRestController {
 	}
 	
 	@PostMapping("/add")
-	public VeicoloDto addVeicolo(@RequestBody VeicoloDto vDto) {
-		VeicoloDto veicolo = veicoloService.addVeicolo(vDto);
+	public VeicoloDto addVeicolo(@RequestBody VeicoloDto vDto, @AuthenticationPrincipal Jwt principal) {
+		VeicoloDto veicolo = veicoloService.addVeicolo(vDto, principal.getSubject());
 		return veicolo;
 	}
 	
-	@DeleteMapping("/veicolo/{id}")
-	public String deleteVeicolo(@PathVariable() Integer id) {
-		veicoloService.deleteVeicolo(id);
+	@DeleteMapping("/veicolo/{targa}")
+	public String deleteVeicolo(@PathVariable() String targa, @AuthenticationPrincipal Jwt principal) {
+		veicoloService.deleteVeicolo(targa, principal.getSubject());
 		return ResponseEntity.ok().build().toString();
 	}
 }

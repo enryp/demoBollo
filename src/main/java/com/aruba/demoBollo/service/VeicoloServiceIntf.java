@@ -10,8 +10,8 @@ public interface VeicoloServiceIntf {
 	
 	public VeicoloDto getVeicolo(String targa, String user);
 
-	public VeicoloDto addVeicolo(VeicoloDto v);
+	public VeicoloDto addVeicolo(VeicoloDto v, String user);
 	
-	public void deleteVeicolo(Integer id);
+	public void deleteVeicolo(String targa, String user);
 
 }

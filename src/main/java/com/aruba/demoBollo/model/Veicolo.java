@@ -26,10 +26,6 @@ import lombok.ToString;
 @Table(name="veicolo")
 public class Veicolo {
 	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private Integer id;
-	
 	@Id
 	@Column(name = "targa")
 	private String targa;

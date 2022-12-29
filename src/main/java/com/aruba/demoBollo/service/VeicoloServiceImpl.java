@@ -28,18 +28,24 @@ public class VeicoloServiceImpl implements VeicoloServiceIntf {
 	@Override
 	public VeicoloDto getVeicolo(String targa, String user) {
 		Veicolo v = veicoloRepository.findVeicolo(targa,user);
-		return veicoloMapper.getDto(v);
+		VeicoloDto veicoloDto = null;
+		if(v != null) {
+			veicoloDto = veicoloMapper.getDto(v);
+		}
+		return veicoloDto;
 	}
 
 	@Override
-	public VeicoloDto addVeicolo(VeicoloDto vDto) {
-		Veicolo v = veicoloRepository.save(veicoloMapper.getEntity(vDto));
-		return veicoloMapper.getDto(v);
+	public VeicoloDto addVeicolo(VeicoloDto vDto, String user) {
+		Veicolo v = veicoloMapper.getEntity(vDto);
+		v.setIdUser(user);
+		Veicolo result = veicoloRepository.save(v);
+		return veicoloMapper.getDto(result);
 	}
 
 	@Override
-	public void deleteVeicolo(Integer id) {
-		veicoloRepository.deleteById(id);
+	public void deleteVeicolo(String targa, String user) {
+		veicoloRepository.deleteVeicolo(targa, user);
 	}
 
 }
