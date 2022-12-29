@@ -2,6 +2,8 @@ package com.aruba.demoBollo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class VeicoloRestController {
 	}
 	
 	@PostMapping("/add")
-	public VeicoloDto addVeicolo(@RequestBody VeicoloDto vDto, @AuthenticationPrincipal Jwt principal) {
+	public VeicoloDto addVeicolo(@Valid @RequestBody VeicoloDto vDto, @AuthenticationPrincipal Jwt principal) {
 		VeicoloDto veicolo = veicoloService.addVeicolo(vDto, principal.getSubject());
 		return veicolo;
 	}
