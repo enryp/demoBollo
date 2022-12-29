@@ -25,11 +25,12 @@ import lombok.ToString;
 @ToString
 @Table(name="veicolo")
 public class Veicolo {
-	@Id
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer id;
 	
+	@Id
 	@Column(name = "targa")
 	private String targa;
 	
@@ -45,7 +46,9 @@ public class Veicolo {
 	
 	@Column(name = "cilindrata")
 	private Integer cilindrata;
-
+	
+	@Column(name = "id_user")
+	private String idUser;
 	
 	
 	

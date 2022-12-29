@@ -20,14 +20,14 @@ public class VeicoloServiceImpl implements VeicoloServiceIntf {
 	private VeicoloMapper veicoloMapper;
 	
 	@Override
-	public List<VeicoloDto> getVeicoli() {
-		List<Veicolo> veicoli = veicoloRepository.findAll();
+	public List<VeicoloDto> getVeicoli(String user) {
+		List<Veicolo> veicoli = veicoloRepository.findVeicoli(user);
 		return veicoli.stream().map(veicoloMapper::getDto).collect(Collectors.toList());
 	}
 
 	@Override
-	public VeicoloDto getVeicolo(Integer id) {
-		Veicolo v = veicoloRepository.findById(id).get();
+	public VeicoloDto getVeicolo(String targa, String user) {
+		Veicolo v = veicoloRepository.findVeicolo(targa,user);
 		return veicoloMapper.getDto(v);
 	}
 

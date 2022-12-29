@@ -6,9 +6,9 @@ import com.aruba.demoBollo.beans.VeicoloDto;
 
 public interface VeicoloServiceIntf {
 	
-	public List<VeicoloDto> getVeicoli();
+	public List<VeicoloDto> getVeicoli(String user);
 	
-	public VeicoloDto getVeicolo(Integer id);
+	public VeicoloDto getVeicolo(String targa, String user);
 
 	public VeicoloDto addVeicolo(VeicoloDto v);
 	
