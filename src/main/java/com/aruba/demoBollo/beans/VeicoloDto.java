@@ -3,6 +3,8 @@ package com.aruba.demoBollo.beans;
 
 import javax.validation.constraints.Pattern;
 
+import org.apache.coyote.http11.filters.SavedRequestInputFilter;
+
 import com.aruba.demoBollo.model.Veicolo;
 
 import lombok.AllArgsConstructor;

@@ -3,6 +3,7 @@ package com.aruba.demoBollo.model;
 
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.ColumnTransformer;
+
+import com.aruba.demoBollo.beans.TipoVeicolo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,9 +36,11 @@ public class Veicolo {
 	private String targa;
 	
 	@Column(name = "tipo")
-	private String tipo;
+	@Convert(converter = TipoVeicoloConverter.class)
+	private TipoVeicolo tipo;
 	
 	@Column(name = "codice_fiscale")
+	@ColumnTransformer(write = "UPPER(?)")
 	private String codiceFiscale;
 	
 	@Column(name = "immatricolazione")
