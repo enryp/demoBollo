@@ -28,15 +28,16 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         	.and()
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/stawapp/rest/veicoli")
+            .antMatchers(HttpMethod.GET, "/api/veicoli")
             .hasRole("springboot_user")
             .anyRequest()
-            .authenticated()
+            .permitAll()
+            //.authenticated()
             .and()
-            .oauth2Login()
-            .and()
-            .oauth2Client()
-            .and()
+            //.oauth2Login()
+            //.and()
+            //.oauth2Client()
+            //.and()
             .oauth2ResourceServer(
                     oauth2ResourceServer -> oauth2ResourceServer.jwt(
                             jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
