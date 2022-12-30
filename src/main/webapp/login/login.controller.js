@@ -22,6 +22,7 @@
                 console.log("@@@@@LoginController@@@@@@ "+JSON.stringify(response));
                 if (response.data.access_token) {
                     //AuthenticationService.setCredentials(vm.username, vm.password);
+                    vm.dataLoading = false;
                     $location.path('/');
                 } else {
                     FlashService.Error(response.message);
