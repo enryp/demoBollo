@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .factory('UserService', UserService);
+        .factory('VeicoloService', VeicoloService);
 
     UserService.$inject = ['$http'];
     function UserService($http) {
