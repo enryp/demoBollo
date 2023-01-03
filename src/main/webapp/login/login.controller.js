@@ -5,15 +5,15 @@
         .module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$location', 'AuthenticationService', 'FlashService'];
-    function LoginController($location, AuthenticationService, FlashService) {
+    LoginController.$inject = ['$location', '$state', 'AuthenticationService', 'FlashService'];
+    function LoginController($location, $state, AuthenticationService, FlashService) {
         var vm = this;
 
         vm.login = login;
 
         (function initController() {
             // reset login status
-            AuthenticationService.clearCredentials();
+            AuthenticationService.logout();
         })();
 
         function login() {
@@ -21,8 +21,8 @@
             AuthenticationService.login(vm.username, vm.password).then(function(response) {
                 console.log("@@@@@LoginController@@@@@@ "+JSON.stringify(response));
                 if (response.data.access_token) {
-                    //AuthenticationService.setCredentials(vm.username, vm.password);
                     vm.dataLoading = false;
+                    //$state.go("home");
                     $location.path('/');
                 } else {
                     FlashService.Error(response.message);

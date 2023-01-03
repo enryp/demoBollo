@@ -5,14 +5,12 @@
         .module('app')
         .factory('AuthenticationService', AuthenticationService);
 
-    AuthenticationService.$inject = ['$http', '$httpParamSerializerJQLike', '$cookies', '$rootScope', '$timeout', 'UserService'];
-    function AuthenticationService($http, $httpParamSerializerJQLike, $cookies, $rootScope, $timeout, UserService) {
+    AuthenticationService.$inject = ['$http', '$httpParamSerializerJQLike', '$localStorage'];
+    function AuthenticationService($http, $httpParamSerializerJQLike, $localStorage) {
         var service = {};
 
         service.login = login;
         service.logout = logout;
-        service.setCredentials = setCredentials;
-        service.clearCredentials = clearCredentials;
 
         return service;
 
@@ -34,7 +32,7 @@
                         let accessToken = response.data.access_token;
                         console.log("@@@@@@@@@@@accessToken@@@ "+JSON.stringify(accessToken));
                         // store username and token in local storage to keep user logged in between page refreshes
-                        //$localStorage.currentUser = { username: username, token: accessToken };
+                        $localStorage.currentUser = { username: username, token: accessToken };
 
                         // add jwt token to auth header for all requests made by the $http service
                         $http.defaults.headers.common.Authorization = 'Bearer ' + accessToken;
@@ -44,7 +42,8 @@
                         return response;
                     } else {
                         // execute callback with false to indicate failed login
-                        callback(false);
+                        //callback(false);
+                        return response;
                     }
                 });
         }
@@ -54,35 +53,5 @@
             delete $localStorage.currentUser;
             $http.defaults.headers.common.Authorization = '';
         }
-
-
-
-        function setCredentials(username, password) {
-            var authdata = Base64.encode(username + ':' + password);
-
-            $rootScope.globals = {
-                currentUser: {
-                    username: username,
-                    authdata: authdata
-                }
-            };
-
-            // set default auth header for http requests
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
-
-            // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
-            var cookieExp = new Date();
-            cookieExp.setDate(cookieExp.getDate() + 7);
-            $cookies.putObject('globals', $rootScope.globals, { expires: cookieExp });
-        }
-
-        function clearCredentials() {
-            $rootScope.globals = {};
-            $cookies.remove('globals');
-            $http.defaults.headers.common.Authorization = 'Basic';
-        }
     }
-
-
-
 })();
