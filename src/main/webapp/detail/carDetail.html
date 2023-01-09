@@ -12,7 +12,7 @@
         <a
           class="btn btn-primary btn-animated"
           ng-if="!vmDetail.editEnabled"
-          ng-click="vmDetail.enableEdit()">
+          ng-click="vmDetail.enableEdit(vmDetail.car)">
           <span>Edit</span>
         </a>
 
@@ -29,7 +29,7 @@
           <a ng-if="vmDetail.editEnabled && vmDetail.creationCar" class="btn btn-default btn-animated" ng-click="vmDetail.backToList()">
             <span >Cancel</span>
           </a>
-          <a ng-if="vmDetail.editEnabled && vmDetail.editCar" class="btn btn-default btn-animated" ng-click="vmDetail.rollback()">
+          <a ng-if="vmDetail.editEnabled && !vmDetail.creationCar" class="btn btn-default btn-animated" ng-click="vmDetail.rollback(vmDetail.car)">
             <span>Cancel</span>
           </a>
 
@@ -50,7 +50,7 @@
               <label class="col-sm-3  control-label">Targa</label>
               <div class="col-sm-9">
                 <input 
-                  ng-disabled="!vmDetail.editEnabled" 
+                  ng-disabled="!vmDetail.editEnabled && !vmDetail.creationCar " 
                   maxlength="20" 
                   type="text" 
                   ng-model="vmDetail.car.targa"

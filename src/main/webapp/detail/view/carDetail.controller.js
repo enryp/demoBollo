@@ -28,7 +28,7 @@
         
         var self = this;
 
-        self.car = carDetailResolve;
+        self.car = {};
         self.editEnabled = false;    
         
 
@@ -45,8 +45,8 @@
 
         function init() {
             self.editEnabled = false;
-            console.log("@@@@@editEnabled "+JSON.stringify(self.editEnabled));
-            console.log("@@@@@ "+JSON.stringify(self.car));
+            self.car = carDetailResolve;
+            console.log("@@@@@car Detail "+JSON.stringify(self.car));
         }
 
         // Annulla e chiudi modal
@@ -56,8 +56,9 @@
         }
 
         // Cambio stato --Edit
-        function enableEdit() {
-            $state.go(self.currentState + '.edit', {
+        function enableEdit(car) {
+            $state.go('detail.edit', {
+                targa: car.targa,
                 creationCar: false
             });
         }

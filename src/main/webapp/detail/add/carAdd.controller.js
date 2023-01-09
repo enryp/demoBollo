@@ -48,6 +48,8 @@ function CarDetailAddController(
       console.log("@@@@@createCar "+JSON.stringify(result));
       $state.go('detail', {
         targa: result.targa
+      },{
+        reload: true
       });
       
     });

@@ -72,6 +72,33 @@
                         return ["AUTO", "MOTO", "RIMORCHIO"];
                     }]
                 }
+            })
+            .state('detail.edit', {
+                url: '/edit?creationCar',
+                params: {
+                  obj: null
+              },
+                views: {
+                  'modal@': {
+                    templateUrl: 'detail/carDetail.html',
+                    controller: 'CarDetailEditController',
+                    controllerAs: 'vmDetail'
+                  }
+                },
+                resolve: {
+                    carDetailResolve: ['$stateParams', '$q', 'CarService', function ($stateParams, $q, CarService) {
+                        if ($stateParams.targa) {
+                            return CarService.getByTarga($stateParams.targa).then(function (car) {
+                                return car;
+                            });
+                        } else {
+                            return null;
+                        }
+                    }],
+                    tipoCarResolve: ['$q', function ($q) {
+                        return ["AUTO", "MOTO", "RIMORCHIO"];
+                    }]
+                }
             });
 
         //interceptor http
