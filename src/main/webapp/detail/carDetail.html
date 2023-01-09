@@ -3,7 +3,7 @@
     <div class="box__header">
       <span class="box__header-title">
         <span>CAR</span>
-        <span ng-if="vmDetail.car">
+        <span ng-if="!vmDetail.editEnabled && vmDetail.car">
           {{vmDetail.car.targa}}
         </span>
       </span>
@@ -19,16 +19,19 @@
         <a class="btn btn-default btn-animated" ng-if="!vmDetail.editEnabled" ng-click="vmDetail.backToList()">
           <span>Close</span>
         </a>
+        
         <span ng-show="vmDetail.editEnabled">
 
           <button type="submit" class="btn  btn-success  btn-animated  float-noneI" ng-show="vmDetail.editEnabled">
             <span>Save</span>
           </button>
 
-          <a ng-if="vmDetail.editEnabled" class="btn btn-default btn-animated" ng-click="vmDetail.backToList()">
+          <a ng-if="vmDetail.editEnabled && vmDetail.creationCar" class="btn btn-default btn-animated" ng-click="vmDetail.backToList()">
+            <span >Cancel</span>
+          </a>
+          <a ng-if="vmDetail.editEnabled && vmDetail.editCar" class="btn btn-default btn-animated" ng-click="vmDetail.rollback()">
             <span>Cancel</span>
           </a>
-          
 
         </span>
       </div>
@@ -47,7 +50,7 @@
               <label class="col-sm-3  control-label">Targa</label>
               <div class="col-sm-9">
                 <input 
-                  ng-disabled="true" 
+                  ng-disabled="!vmDetail.editEnabled" 
                   maxlength="20" 
                   type="text" 
                   ng-model="vmDetail.car.targa"
@@ -60,7 +63,7 @@
               <label class="col-sm-3  control-label">Cilindrata</label>
               <div class="col-sm-9">
                 <input
-                  type="text"
+                  type="number"
                   ng-model="vmDetail.car.cilindrata"
                   class="form-control input-sm"
                   ng-disabled="!vmDetail.editEnabled"/>
@@ -75,11 +78,10 @@
                   ng-init="vmDetail.car.tipo"
                   class="angular-select form-control"
                   ng-model="vmDetail.car.tipo"
-                  ng-options="cpd.value as cpd.value for cpd in vmDetail.tipologieCarList">
-                  <option value="" data-translate="global.form.nessunaSelezione"/>
+                  ng-options="tc as tc for tc in vmDetail.tipoCarList">
                 </select>
                 <input
-                  ng-if="!CodificaPrestazioneDetailCtrl.editEnabled"
+                  ng-if="!vmDetail.editEnabled"
                   type="text"
                   ng-readonly="true"
                   ng-model="vmDetail.car.tipo"
@@ -115,12 +117,13 @@
           <div class="col-sm-6">
 
             <div class="form-group">
-              <label class="col-sm-3  control-label">Bollo</label>
+              <label ng-show="!vmDetail.editEnabled" class="col-sm-3  control-label">Bollo</label>
               <div class="col-sm-9">
                 <input
                   type="text"
-                  ng-model="vmDetail.car.cilindrata"
+                  ng-model="vmDetail.bollo.importo"
                   class="form-control input-sm"
+                  ng-show="!vmDetail.editEnabled"
                   ng-disabled="!vmDetail.editEnabled"/>
               </div>
             </div>

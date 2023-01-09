@@ -54,6 +54,24 @@
                         }
                     }]
                 }
+            })
+            .state('detail.add', {
+                url: '/new?creationCar',
+                params: {
+                  obj: null
+              },
+                views: {
+                  'modal@': {
+                    templateUrl: 'detail/carDetail.html',
+                    controller: 'CarDetailAddController',
+                    controllerAs: 'vmDetail'
+                  }
+                },
+                resolve: {
+                    tipoCarResolve: ['$q', function ($q) {
+                        return ["AUTO", "MOTO", "RIMORCHIO"];
+                    }]
+                }
             });
 
         //interceptor http

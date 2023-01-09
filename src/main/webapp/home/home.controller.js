@@ -13,6 +13,7 @@
         vm.allCars = [];
         vm.deleteCar = deleteCar;
         vm.openCarDetailModal = openCarDetailModal;
+        vm.openAddCarDetailModal = openAddCarDetailModal;
 
         initController();
 
@@ -45,6 +46,13 @@
             console.log("@@@goto state car.detail "+JSON.stringify(car));
             $state.go('detail', {
                 targa: car.targa
+            });
+        }
+
+        function openAddCarDetailModal() {
+            console.log("@@@goto state car.detail.add ");
+            $state.go('detail.add',{
+                creationCar: true
             });
         }
 

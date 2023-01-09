@@ -58,7 +58,7 @@
         // Cambio stato --Edit
         function enableEdit() {
             $state.go(self.currentState + '.edit', {
-                creationCodificaPrestazione: false
+                creationCar: false
             });
         }
 

@@ -28,7 +28,7 @@
 
 
         function createCar(veicolo) {
-            return $http.post('/api/users', veicolo).then(handleSuccess, handleError('Error creating car'));
+            return $http.post('/api/car', veicolo).then(handleSuccess, handleError('Error creating car'));
         }
 
         function updateCar(veicolo) {
