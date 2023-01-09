@@ -1,0 +1,140 @@
+<form novalidate ng-submit="vmDetail.edit(editForm)" name="editForm" submit-once class="form-horizontal">
+  <div class="box  ui-widget-content" dragable>
+    <div class="box__header">
+      <span class="box__header-title">
+        <span>CAR</span>
+        <span ng-if="vmDetail.car">
+          {{vmDetail.car.targa}}
+        </span>
+      </span>
+
+      <div class="box__header-buttons-container">
+        <a
+          class="btn btn-primary btn-animated"
+          ng-if="!vmDetail.editEnabled"
+          ng-click="vmDetail.enableEdit()">
+          <span>Edit</span>
+        </a>
+
+        <a class="btn btn-default btn-animated" ng-if="!vmDetail.editEnabled" ng-click="vmDetail.backToList()">
+          <span>Close</span>
+        </a>
+        <span ng-show="vmDetail.editEnabled">
+
+          <button type="submit" class="btn  btn-success  btn-animated  float-noneI" ng-show="vmDetail.editEnabled">
+            <span>Save</span>
+          </button>
+
+          <a ng-if="vmDetail.editEnabled" class="btn btn-default btn-animated" ng-click="vmDetail.backToList()">
+            <span>Cancel</span>
+          </a>
+          
+
+        </span>
+      </div>
+
+    </div>
+
+    <div class="box__content">
+
+      <!-- Content -->
+      <fieldset ng-disabled="!vmDetail.editEnabled">
+        <div class="row">
+
+          <div class="col-sm-6">
+
+            <div class="form-group">
+              <label class="col-sm-3  control-label">Targa</label>
+              <div class="col-sm-9">
+                <input 
+                  ng-disabled="true" 
+                  maxlength="20" 
+                  type="text" 
+                  ng-model="vmDetail.car.targa"
+                  class="form-control input-sm"
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3  control-label">Cilindrata</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  ng-model="vmDetail.car.cilindrata"
+                  class="form-control input-sm"
+                  ng-disabled="!vmDetail.editEnabled"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3  control-label">Tipo</label>
+              <div class="col-sm-9">
+                <select
+                  ng-show="vmDetail.editEnabled"
+                  ng-init="vmDetail.car.tipo"
+                  class="angular-select form-control"
+                  ng-model="vmDetail.car.tipo"
+                  ng-options="cpd.value as cpd.value for cpd in vmDetail.tipologieCarList">
+                  <option value="" data-translate="global.form.nessunaSelezione"/>
+                </select>
+                <input
+                  ng-if="!CodificaPrestazioneDetailCtrl.editEnabled"
+                  type="text"
+                  ng-readonly="true"
+                  ng-model="vmDetail.car.tipo"
+                  class="form-control input-sm"
+                  ng-disabled="!vmDetail.editEnabled"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3  control-label">Codice Fiscale</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  ng-model="vmDetail.car.codiceFiscale"
+                  class="form-control input-sm"
+                  ng-disabled="!vmDetail.editEnabled"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3  control-label">Immatricolazione</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  ng-model="vmDetail.car.immatricolazione"
+                  class="form-control input-sm"
+                  ng-disabled="!vmDetail.editEnabled"/>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-sm-6">
+
+            <div class="form-group">
+              <label class="col-sm-3  control-label">Bollo</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  ng-model="vmDetail.car.cilindrata"
+                  class="form-control input-sm"
+                  ng-disabled="!vmDetail.editEnabled"/>
+              </div>
+            </div>
+
+            
+
+          </div>
+
+        </div>
+      </fieldset>
+
+      
+
+    </div>
+
+  </div>
+</form>

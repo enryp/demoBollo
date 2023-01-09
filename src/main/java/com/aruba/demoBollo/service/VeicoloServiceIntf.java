@@ -12,6 +12,8 @@ public interface VeicoloServiceIntf {
 
 	public VeicoloDto addVeicolo(VeicoloDto v, String user);
 	
+	public VeicoloDto updateVeicolo(VeicoloDto v, String user);
+	
 	public void deleteVeicolo(String targa, String user);
 
 }

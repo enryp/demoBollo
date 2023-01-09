@@ -3,12 +3,12 @@
 
     angular
         //.module('app', ['ngRoute', 'ngCookies'])
-        .module('app', ['ui.router', 'ngMessages', 'ngStorage'])
+        .module('app', ['ui.router', 'ngMessages', 'ngStorage', 'ui.bootstrap'])
         .config(config)
         .run(run);
 
-        config.$inject = ['$stateProvider', '$urlRouterProvider'];
-        function config($stateProvider, $urlRouterProvider) {
+        config.$inject = ['$stateProvider', '$urlRouterProvider', '$provide', '$httpProvider'];
+        function config($stateProvider, $urlRouterProvider, $provide, $httpProvider) {
         // default route
         $urlRouterProvider.otherwise("/");
 
@@ -25,31 +25,59 @@
                 templateUrl: 'login/login.view.html',
                 controller: 'LoginController',
                 controllerAs: 'vm'
+            })
+            .state('detail', {
+                url: '/detail?targa',
+                onEnter: ['ModalService', '$state', function (ModalService, $state) {
+                    ModalService.newInstance("modalContainer.html")
+                        .result.finally(function () {
+                        $state.go('home', {}, {
+                            reload: true
+                        });
+
+                    });
+                }],
+                views: {
+                    'modal@': {
+                        templateUrl: 'detail/carDetail.html',
+                        controller: 'CarDetailController',
+                        controllerAs: 'vmDetail'
+                }},
+                resolve: {
+                    carDetailResolve: ['$stateParams', '$q', 'CarService', function ($stateParams, $q, CarService) {
+                        if ($stateParams.targa) {
+                            return CarService.getByTarga($stateParams.targa).then(function (car) {
+                                return car;
+                            });
+                        } else {
+                            return null;
+                        }
+                    }]
+                }
             });
+
+        //interceptor http
+        $provide.factory('unauthorisedInterceptor', ['$q','$localStorage', function ($q, $localStorage) {
+            
+            return {
+                'responseError': function (rejection) {
+                    console.log("@@@@@@@@@@@@ interceptor "+JSON.stringify(rejection));
+                    if (rejection.status === 401) {
+                        if ($localStorage.currentUser) {
+                            delete $localStorage.currentUser;
+                        }
+                        //$stateProvider.state('login');
+                        window.location.href = '#!/login';
+                    }
+     
+                    return $q.reject(rejection);
+                }
+            };
+        }]);
+     
+        $httpProvider.interceptors.push('unauthorisedInterceptor');
     }    
 
-    // config.$inject = ['$routeProvider', '$locationProvider'];
-    // function config($routeProvider, $locationProvider) {
-    //     $routeProvider
-    //         .when('/', {
-    //             controller: 'HomeController',
-    //             templateUrl: 'home/home.view.html',
-    //             controllerAs: 'vm'
-    //         })
-    //         .when('/login', {
-    //             controller: 'LoginController',
-    //             templateUrl: 'login/login.view.html',
-    //             controllerAs: 'vm'
-    //         })
-
-    //         // .when('/register', {
-    //         //     controller: 'RegisterController',
-    //         //     templateUrl: 'register/register.view.html',
-    //         //     controllerAs: 'vm'
-    //         // })
-
-    //         .otherwise({ redirectTo: '/login' });
-    // }
 
     run.$inject = ['$rootScope', '$http', '$location', '$localStorage', '$state'];
     function run($rootScope, $http, $location, $localStorage, $state) {
@@ -68,22 +96,6 @@
         });
     }
 
-    // run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
-    // function run($rootScope, $location, $cookies, $http) {
-    //     // keep user logged in after page refresh
-    //     $rootScope.globals = $cookies.getObject('globals') || {};
-    //     if ($rootScope.globals.currentUser) {
-    //         $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
-    //     }
 
-    //     // $rootScope.$on('$locationChangeStart', function (event, next, current) {
-    //     //     // redirect to login page if not logged in and trying to access a restricted page
-    //     //     var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
-    //     //     var loggedIn = $rootScope.globals.currentUser;
-    //     //     if (restrictedPage && !loggedIn) {
-    //     //         $location.path('/login');
-    //     //     }
-    //     // });
-    // }
 
 })();

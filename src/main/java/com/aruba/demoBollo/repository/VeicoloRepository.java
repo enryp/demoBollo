@@ -25,5 +25,6 @@ public interface VeicoloRepository extends JpaRepository<Veicolo, String>{
 	@Modifying
 	@Query("delete from Veicolo v where v.targa = :targa and v.idUser = :idUser")
     void deleteVeicolo(@Param("targa") String targa, @Param("idUser") String idUser);
+	
 
 }

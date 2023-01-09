@@ -33,9 +33,5 @@ public class VeicoloDto {
 	
 	private Integer cilindrata;
 	
-	public Veicolo toEntity(VeicoloDto vDto) {
-		Veicolo v = new Veicolo();
-        return v;
-    }
 
 }

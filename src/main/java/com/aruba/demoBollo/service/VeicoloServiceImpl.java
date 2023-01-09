@@ -42,6 +42,25 @@ public class VeicoloServiceImpl implements VeicoloServiceIntf {
 		Veicolo result = veicoloRepository.save(v);
 		return veicoloMapper.getDto(result);
 	}
+	
+	@Override
+	public VeicoloDto updateVeicolo(VeicoloDto vDto, String user) {
+		Veicolo vUpdate = veicoloMapper.getEntity(vDto);
+		Veicolo vDb = veicoloRepository.findVeicolo(vDto.getTarga(), user);
+		if(vDb != null) {
+			vDb.setTipo(vUpdate.getTipo());
+			vDb.setCilindrata(vUpdate.getCilindrata());
+			vDb.setImmatricolazione(vUpdate.getImmatricolazione());
+			vDb.setCodiceFiscale(vUpdate.getCodiceFiscale());
+		}
+		else {
+			//new entity
+			vDb = vUpdate;
+			vDb.setIdUser(user);
+		}
+		veicoloRepository.save(vDb);
+		return veicoloMapper.getDto(vDb);
+	}
 
 	@Override
 	public void deleteVeicolo(String targa, String user) {

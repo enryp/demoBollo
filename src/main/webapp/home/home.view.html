@@ -1,11 +1,33 @@
-﻿<h1>Hi {{vm.user.firstName}}!</h1>
+﻿<h1>Hi {{vm.user}}!</h1>
 <p>You're logged in with JWT!!</p>
-<h3>All registered users:</h3>
-<ul>
-    <li ng-repeat="user in vm.allUsers">
-        {{user.username}} ({{user.firstName}} {{user.lastName}})
-        - <a ng-click="vm.deleteUser(user.id)">Delete</a>
-    </li>
-</ul>
-<p>&nbsp;</p>
+<h3>All registered cars:</h3>
+<div class="container">
+    <div class="padding-top-16">
+        <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="col-md-1" >targa</th>
+                    <th class="col-md-1" >tipo</th>
+                    <th class="col-md-1" >cilindrata</th>
+                    <th class="col-md-1" >data immatricolazione</th>
+                    <th class="col-md-1" >codice fiscale</th>
+                    <th class="col-md-1" > </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="car in vm.allCars">
+                    <td class="col-md-1"><a ng-click="vm.openCarDetailModal(car)">{{car.targa}}</a></td>
+                    <td class="col-md-1">{{car.tipo}}</td>
+                    <td>{{car.cilindrata}}</td>
+                    <td>{{car.immatricolazione}}</td>
+                    <td>{{car.codiceFiscale}}</td>
+                    <td><a ng-click="vm.deleteCar(car.targa)" class="btn btn-primary">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+    
+    </div>
+    <p>&nbsp;</p>
 <p><a href="#!/login" class="btn btn-primary">Logout</a></p>
+
+</div>
