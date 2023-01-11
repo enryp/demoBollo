@@ -27,7 +27,7 @@
                 controllerAs: 'vm'
             })
             .state('detail', {
-                url: '/detail?targa',
+                url: '/detail?targa&tipo',
                 onEnter: ['ModalService', '$state', function (ModalService, $state) {
                     ModalService.newInstance("modalContainer.html")
                         .result.finally(function () {
@@ -48,6 +48,15 @@
                         if ($stateParams.targa) {
                             return CarService.getByTarga($stateParams.targa).then(function (car) {
                                 return car;
+                            });
+                        } else {
+                            return null;
+                        }
+                    }],
+                    carBolloResolve: ['$stateParams', '$q', 'CarService', function ($stateParams, $q, CarService) {
+                        if ($stateParams.targa && $stateParams.tipo) {
+                            return CarService.getBollo($stateParams.targa, $stateParams.tipo).then(function (bollo) {
+                                return bollo;
                             });
                         } else {
                             return null;
@@ -102,25 +111,25 @@
             });
 
         //interceptor http
-        // $provide.factory('unauthorisedInterceptor', ['$q','$localStorage', function ($q, $localStorage) {
+        $provide.factory('unauthorisedInterceptor', ['$q','$localStorage', function ($q, $localStorage) {
             
-        //     return {
-        //         'responseError': function (rejection) {
-        //             console.log("@@@@@@@@@@@@ interceptor "+JSON.stringify(rejection));
-        //             if (rejection.status === 401) {
-        //                 if ($localStorage.currentUser) {
-        //                     delete $localStorage.currentUser;
-        //                 }
-        //                 //$stateProvider.state('login');
-        //                 window.location.href = '#!/login';
-        //             }
+            return {
+                'responseError': function (rejection) {
+                    console.log("@@@@@@@@@@@@ interceptor "+JSON.stringify(rejection));
+                    if (rejection.status === 401) {
+                        if ($localStorage.currentUser) {
+                            delete $localStorage.currentUser;
+                        }
+                        //$stateProvider.state('login');
+                        window.location.href = '#!/login';
+                    }
      
-        //             return $q.reject(rejection);
-        //         }
-        //     };
-        // }]);
+                    return $q.reject(rejection);
+                }
+            };
+        }]);
      
-        // $httpProvider.interceptors.push('unauthorisedInterceptor');
+        $httpProvider.interceptors.push('unauthorisedInterceptor');
     }    
 
 

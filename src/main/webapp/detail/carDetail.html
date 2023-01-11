@@ -136,13 +136,37 @@
           <div class="col-sm-6">
 
             <div class="form-group">
-              <label ng-show="!vmDetail.editEnabled" class="col-sm-3  control-label">Bollo</label>
+              <label ng-show="!vmDetail.editEnabled && vmDetail.bollo" class="col-sm-3  control-label">Scadenza</label>
               <div class="col-sm-9">
                 <input
                   type="text"
-                  ng-model="vmDetail.bollo.importo"
+                  ng-model="vmDetail.bollo.scadenza"
                   class="form-control input-sm"
-                  ng-show="!vmDetail.editEnabled"
+                  ng-show="!vmDetail.editEnabled && vmDetail.bollo"
+                  ng-disabled="!vmDetail.editEnabled"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label ng-show="!vmDetail.editEnabled && vmDetail.bollo" class="col-sm-3  control-label">Entro il</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  ng-model="vmDetail.bollo.ultimoGiornoUtile"
+                  class="form-control input-sm"
+                  ng-show="!vmDetail.editEnabled && vmDetail.bollo"
+                  ng-disabled="!vmDetail.editEnabled"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label ng-show="!vmDetail.editEnabled && vmDetail.bollo" class="col-sm-3  control-label">Totale</label>
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  ng-model="vmDetail.bollo.totale"
+                  class="form-control input-sm"
+                  ng-show="!vmDetail.editEnabled && vmDetail.bollo"
                   ng-disabled="!vmDetail.editEnabled"/>
               </div>
             </div>

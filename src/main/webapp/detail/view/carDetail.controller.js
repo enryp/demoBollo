@@ -10,9 +10,8 @@
         '$scope',
         '$state',
         'ModalService',
-        'carDetailResolve'
-       // 'DefaultParameters',
-        //'CodificaPrestazioneService'
+        'carDetailResolve',
+        'carBolloResolve'
     ];
 
     /* @ngInject */
@@ -21,14 +20,15 @@
         $scope,
         $state,
         ModalService,
-        carDetailResolve
-        // DefaultParameters,
-        //CodificaPrestazioneService
+        carDetailResolve,
+        carBolloResolve
         ) {
         
         var self = this;
-
+        //{"targa":"en300zj","tipo":"AUTO","codiceFiscale":"PRGNRC76R25L219M","immatricolazione":"2012-09-12","cilindrata":110}
         self.car = {};
+        //{"targa":"EN300ZJ","scadenza":"SETTEMBRE 2023","ultimoGiornoUtile":"31/10/2022","validita":12,"totale":267.37,"tassa":262.08,"sanzione":4.38,"interesse":0.91}
+        self.bollo = {};
         self.editEnabled = false;    
         
 
@@ -47,6 +47,8 @@
             self.editEnabled = false;
             self.car = carDetailResolve;
             console.log("@@@@@car Detail "+JSON.stringify(self.car));
+            self.bollo = carBolloResolve;
+            console.log("@@@@@car Bollo "+JSON.stringify(self.bollo));
         }
 
         // Annulla e chiudi modal

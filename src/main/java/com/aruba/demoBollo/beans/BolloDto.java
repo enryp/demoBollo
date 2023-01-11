@@ -42,7 +42,6 @@ import lombok.ToString;
  */
 public class BolloDto {
 	
-	
 	private String targa;
 	
 	private String scadenza;

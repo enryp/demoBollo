@@ -50,7 +50,8 @@
         function openCarDetailModal(car) {
             console.log("@@@goto state car.detail "+JSON.stringify(car));
             $state.go('detail', {
-                targa: car.targa
+                targa: car.targa,
+                tipo: car.tipo
             });
         }
 

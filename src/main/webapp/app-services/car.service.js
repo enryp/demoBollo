@@ -14,6 +14,7 @@
         service.createCar = createCar;
         service.updateCar = updateCar;
         service.deleteCar = deleteCar;
+        service.getBollo = getBollo;
 
         return service;
 
@@ -25,7 +26,9 @@
             return $http.get('/api/car/' + targa).then(handleSuccess, handleError('Error getting car by targa'));
         }
 
-
+        function getBollo(targa, tipoVeicolo) {
+            return $http.get('/api/car/'+targa+'/'+tipoVeicolo+'/bollo').then(handleSuccess, handleError('Error getting bollo by targa and tipo veicolo'));
+        }
 
         function createCar(veicolo) {
             return $http.post('/api/car', veicolo).then(handleSuccess, handleError('Error creating car'));
