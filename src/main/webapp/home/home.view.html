@@ -6,16 +6,46 @@
         <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="col-md-1" >targa</th>
-                    <th class="col-md-1" >tipo</th>
-                    <th class="col-md-1" >cilindrata</th>
-                    <th class="col-md-1" >data immatricolazione</th>
-                    <th class="col-md-1" >codice fiscale</th>
-                    <th class="col-md-1" > </th>
+                    <th class="col-md-1" ng-click="vm.orderBy('targa'); vm.reverseSort = !vm.reverseSort">
+                        targa
+                        <span ng-show="vm.orderByField == 'targa'">
+                            <span ng-show="!vm.reverseSort">^</span>
+                            <span ng-show="vm.reverseSort">v</span>
+                        </span>
+                    </th>
+                    <th class="col-md-1" ng-click="vm.orderBy('tipo'); vm.reverseSort = !vm.reverseSort">
+                        tipo
+                        <span ng-show="vm.orderByField == 'tipo'">
+                            <span ng-show="!vm.reverseSort">^</span>
+                            <span ng-show="vm.reverseSort">v</span>
+                        </span>
+                    </th>
+                    <th class="col-md-1" ng-click="vm.orderBy('cilindrata'); vm.reverseSort = !vm.reverseSort">
+                        cilindrata
+                        <span ng-show="vm.orderByField == 'cilindrata'">
+                            <span ng-show="!vm.reverseSort">^</span>
+                            <span ng-show="vm.reverseSort">v</span>
+                        </span>
+                    </th>
+                    <th class="col-md-1" ng-click="vm.orderBy('immatricolazione'); vm.reverseSort = !vm.reverseSort">
+                        data immatricolazione
+                        <span ng-show="vm.orderByField == 'immatricolazione'">
+                            <span ng-show="!vm.reverseSort">^</span>
+                            <span ng-show="vm.reverseSort">v</span>
+                        </span>
+                    </th>
+                    <th class="col-md-1" ng-click="vm.orderBy('codiceFiscale'); vm.reverseSort = !vm.reverseSort">
+                        codice fiscale
+                        <span ng-show="vm.orderByField == 'codiceFiscale'">
+                            <span ng-show="!vm.reverseSort">^</span>
+                            <span ng-show="vm.reverseSort">v</span>
+                        </span>
+                    </th>
+                    <th class="col-md-1"> </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="car in vm.allCars">
+                <tr ng-repeat="car in vm.allCars | orderBy:vm.orderByField:vm.reverseSort">
                     <td class="col-md-1"><a ng-click="vm.openCarDetailModal(car)">{{car.targa}}</a></td>
                     <td class="col-md-1">{{car.tipo}}</td>
                     <td>{{car.cilindrata}}</td>

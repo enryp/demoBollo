@@ -14,6 +14,11 @@
         vm.deleteCar = deleteCar;
         vm.openCarDetailModal = openCarDetailModal;
         vm.openAddCarDetailModal = openAddCarDetailModal;
+        vm.orderByField = 'targa';
+        vm.reverseSort = false;
+        vm.orderBy= orderBy;
+        vm.orderByDate= orderByDate;
+
 
         initController();
 
@@ -55,6 +60,15 @@
                 creationCar: true
             });
         }
+
+        function orderBy(columnName) {
+            vm.orderByField = columnName;
+        }
+
+        function orderByDate(car) {
+            return moment(car.immatricolazione, 'YYYY-MM-DD');
+        }
+
 
         
     }

@@ -14,7 +14,7 @@
 
         return service;
 
-        function login(username, password, callback) {
+        function login(username, password) {
             //http://localhost:8085/realms/SpringBootKeycloak/protocol/openid-connect/token
 
             // $http.post('/api/authenticate', { username: username, password: password })
@@ -45,7 +45,8 @@
                         //callback(false);
                         return response;
                     }
-                });
+                })
+                .catch((e) => {console.log("@@@@@@@@@@@error "+JSON.stringify(e)); return e;});
         }
 
         function logout() {

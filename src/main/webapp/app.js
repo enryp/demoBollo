@@ -102,25 +102,25 @@
             });
 
         //interceptor http
-        $provide.factory('unauthorisedInterceptor', ['$q','$localStorage', function ($q, $localStorage) {
+        // $provide.factory('unauthorisedInterceptor', ['$q','$localStorage', function ($q, $localStorage) {
             
-            return {
-                'responseError': function (rejection) {
-                    console.log("@@@@@@@@@@@@ interceptor "+JSON.stringify(rejection));
-                    if (rejection.status === 401) {
-                        if ($localStorage.currentUser) {
-                            delete $localStorage.currentUser;
-                        }
-                        //$stateProvider.state('login');
-                        window.location.href = '#!/login';
-                    }
+        //     return {
+        //         'responseError': function (rejection) {
+        //             console.log("@@@@@@@@@@@@ interceptor "+JSON.stringify(rejection));
+        //             if (rejection.status === 401) {
+        //                 if ($localStorage.currentUser) {
+        //                     delete $localStorage.currentUser;
+        //                 }
+        //                 //$stateProvider.state('login');
+        //                 window.location.href = '#!/login';
+        //             }
      
-                    return $q.reject(rejection);
-                }
-            };
-        }]);
+        //             return $q.reject(rejection);
+        //         }
+        //     };
+        // }]);
      
-        $httpProvider.interceptors.push('unauthorisedInterceptor');
+        // $httpProvider.interceptors.push('unauthorisedInterceptor');
     }    
 
 

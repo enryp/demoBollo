@@ -25,7 +25,7 @@
                     //$state.go("home");
                     $location.path('/');
                 } else {
-                    //FlashService.Error(response.message);
+                    FlashService.Error(response.data.error);
                     vm.error = 'Username or password is incorrect';
                     vm.dataLoading = false;
                 }
