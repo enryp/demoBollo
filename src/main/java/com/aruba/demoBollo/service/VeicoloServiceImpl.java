@@ -1,14 +1,24 @@
 package com.aruba.demoBollo.service;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.aruba.demoBollo.beans.BolloDto;
+import com.aruba.demoBollo.beans.TipoVeicolo;
 import com.aruba.demoBollo.beans.VeicoloDto;
 import com.aruba.demoBollo.mappers.VeicoloMapper;
 import com.aruba.demoBollo.model.Veicolo;
 import com.aruba.demoBollo.repository.VeicoloRepository;
+
+import reactor.core.publisher.Mono;
 
 @Service
 public class VeicoloServiceImpl implements VeicoloServiceIntf {
@@ -18,6 +28,7 @@ public class VeicoloServiceImpl implements VeicoloServiceIntf {
 	
 	@Autowired
 	private VeicoloMapper veicoloMapper;
+	
 	
 	@Override
 	public List<VeicoloDto> getVeicoli(String user) {
@@ -65,6 +76,34 @@ public class VeicoloServiceImpl implements VeicoloServiceIntf {
 	@Override
 	public void deleteVeicolo(String targa, String user) {
 		veicoloRepository.deleteVeicolo(targa, user);
+	}
+
+	@Override
+	public BolloDto retrieveBollo(String targa, TipoVeicolo tipo) {
+		URI regioneUri = UriComponentsBuilder.fromUriString("https://tassa-auto.sistemapiemonte.it/stawapp/rest/bollo/calcola")
+						.queryParam("targa", targa)
+						.queryParam("tipo_veicolo", tipo.getKey())
+						.build().toUri();
+		WebClient webClient = WebClient.create();
+		ResponseEntity<BolloDto> response = webClient.get()
+								  .uri(regioneUri)
+								  .header("Content-Type", "application/json")
+								  .retrieve()
+								    // Don't treat 404 responses as errors:
+								    .onStatus(
+								        status -> status.value() == 404,
+								        clientResponse -> Mono.empty()
+								    )
+
+								    .toEntity(BolloDto.class)
+								    .block();
+		
+		if (response.getStatusCodeValue() == 404) {
+			return null;
+		} else {
+			return response.getBody();
+		}
+
 	}
 
 }

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aruba.demoBollo.beans.BolloDto;
+import com.aruba.demoBollo.beans.TipoVeicolo;
 import com.aruba.demoBollo.beans.VeicoloDto;
 import com.aruba.demoBollo.service.VeicoloServiceImpl;
 
@@ -50,6 +52,13 @@ public class VeicoloRestController {
 	public ResponseEntity<VeicoloDto> getVeicolo(@PathVariable() String targa, @AuthenticationPrincipal Jwt principal) {
 		VeicoloDto veicolo = veicoloService.getVeicolo(targa, principal.getSubject());
 		return ResponseEntity.ok(veicolo);
+	}
+	
+	@GetMapping("/car/{targa}/{tipo}/bollo")
+	public ResponseEntity<BolloDto> getBolloVeicolo(@PathVariable() String targa, @PathVariable() String tipo, @AuthenticationPrincipal Jwt principal) {
+		TipoVeicolo tipoVeicolo = TipoVeicolo.valueOf(tipo);
+		BolloDto bollo = veicoloService.retrieveBollo(targa, tipoVeicolo);
+		return ResponseEntity.ok(bollo);
 	}
 	
 	@PutMapping("/car/{targa}")

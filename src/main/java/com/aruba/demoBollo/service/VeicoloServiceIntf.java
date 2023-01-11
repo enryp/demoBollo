@@ -2,6 +2,8 @@ package com.aruba.demoBollo.service;
 
 import java.util.List;
 
+import com.aruba.demoBollo.beans.BolloDto;
+import com.aruba.demoBollo.beans.TipoVeicolo;
 import com.aruba.demoBollo.beans.VeicoloDto;
 
 public interface VeicoloServiceIntf {
@@ -15,5 +17,7 @@ public interface VeicoloServiceIntf {
 	public VeicoloDto updateVeicolo(VeicoloDto v, String user);
 	
 	public void deleteVeicolo(String targa, String user);
+	
+	public BolloDto retrieveBollo(String targa, TipoVeicolo tipo);
 
 }
