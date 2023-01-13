@@ -111,7 +111,7 @@
             });
 
         //interceptor http
-        $provide.factory('unauthorisedInterceptor', ['$q','$localStorage', function ($q, $localStorage) {
+        $provide.factory('unauthorisedInterceptor', ['$q','$localStorage','$location', function ($q, $localStorage, $location) {
             
             return {
                 'responseError': function (rejection) {
@@ -120,8 +120,9 @@
                         if ($localStorage.currentUser) {
                             delete $localStorage.currentUser;
                         }
-                        //$stateProvider.state('login');
-                        window.location.href = '#!/login';
+                        
+                        //window.location.href = '#!/login';
+                        $location.path('/login');
                     }
      
                     return $q.reject(rejection);

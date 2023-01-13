@@ -68,18 +68,18 @@
         }
 
         function checkScadenzaLimit(){
-            let now = moment(); 
-            console.log("@@now "+now.format('YYYY-MM-DD'));
-            let ultimoGiornoUtile = moment(self.bollo.ultimoGiornoUtile, "DD/MM/YYYY"); 
-            console.log("@@ultimoGiornoUtile "+ultimoGiornoUtile.format('YYYY-MM-DD')); 
+            let now = moment({});
+            let nowStr = now.format('YYYY-MM-DD');
+            let ultimoGiornoUtile = moment(self.bollo.ultimoGiornoUtile, "DD-MM-YYYY"); 
+            let ultimoGiornoUtileStr = ultimoGiornoUtile.format('YYYY-MM-DD');
             let sogliaScadenzaBollo = ultimoGiornoUtile.subtract(3, 'months');
-            console.log("@@sogliaScadenzaBollo "+sogliaScadenzaBollo.format('YYYY-MM-DD'));
+            let sogliaScadenzaBolloStr = sogliaScadenzaBollo.format('YYYY-MM-DD');
 
-            if(now.isAfter(ultimoGiornoUtile)){
+            if(moment(nowStr).isAfter(ultimoGiornoUtileStr)){
                 self.bolloScaduto = true;
                 self.bolloInScadenza = false;
             }
-            else if(now.isBetween(sogliaScadenzaBollo,ultimoGiornoUtile)){
+            else if(moment(nowStr).isBetween(sogliaScadenzaBolloStr,ultimoGiornoUtileStr)){
                 self.bolloScaduto = false;
                 self.bolloInScadenza = true;
             }
