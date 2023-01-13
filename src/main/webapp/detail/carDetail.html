@@ -171,6 +171,12 @@
               </div>
             </div>
 
+            <div class="col-sm-9">
+            <span ng-show="!vmDetail.editEnabled && vmDetail.bollo && vmDetail.bolloInScadenza" class="help-block" style="color:red">BOLLO IN SCADENZA</span>
+            </div>
+            <div class="col-sm-9">
+              <span ng-show="!vmDetail.editEnabled && vmDetail.bollo && vmDetail.bolloScaduto" class="help-block" style="color:red">BOLLO SCADUTO</span>
+            </div>
             
 
           </div>
