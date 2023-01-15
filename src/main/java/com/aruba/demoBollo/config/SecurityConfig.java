@@ -31,8 +31,8 @@ public class SecurityConfig {
             .antMatchers("/login").permitAll()
             .antMatchers(HttpMethod.GET, "/api/veicoli").hasRole("springboot_user")
             .anyRequest()
-            .permitAll()
-            //.authenticated()
+            //.permitAll()
+            .authenticated()
             .and()
             //.oauth2Login()
             //.and()
@@ -43,6 +43,8 @@ public class SecurityConfig {
                             jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
         return http.build();
     }
+    
+
     
     private Converter<Jwt, ? extends AbstractAuthenticationToken> jwtAuthenticationConverter() {
         JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();

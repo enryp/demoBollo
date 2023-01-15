@@ -73,7 +73,7 @@ public class VeicoloRestController {
 	@PostMapping("/car")
 	public ResponseEntity<VeicoloDto> addVeicolo(@Valid @RequestBody VeicoloDto vDto, @AuthenticationPrincipal Jwt principal) {
 		VeicoloDto veicolo = veicoloService.addVeicolo(vDto, principal.getSubject());
-		return ResponseEntity.ok(veicolo);
+		return ResponseEntity.status(HttpStatus.CREATED).body(veicolo);
 	}
 	
 	@DeleteMapping("/car/{targa}")
