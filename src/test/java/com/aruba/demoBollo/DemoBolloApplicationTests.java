@@ -1,6 +1,9 @@
 package com.aruba.demoBollo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,6 +29,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.aruba.demoBollo.beans.BolloDto;
+import com.aruba.demoBollo.beans.TipoVeicolo;
 import com.aruba.demoBollo.beans.VeicoloDto;
 import com.aruba.demoBollo.controller.VeicoloRestController;
 import com.aruba.demoBollo.service.VeicoloServiceImpl;
@@ -174,11 +179,37 @@ class DemoBolloApplicationTests {
 	}
 	
 	@Test
+	void updateVeicolo2() throws Exception {
+	    
+	    AccessTokenDto atDto = getToken();
+		VeicoloDto veicoloDto = new VeicoloDto();
+		veicoloDto.setTarga("AB123CD");
+
+		Mockito.when(veicoloService.updateVeicolo(Mockito.any(VeicoloDto.class), Mockito.anyString())).thenReturn(veicoloDto);
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/api/car/AB456CD")
+				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", "Bearer " + atDto.getAccessToken()).content(objectMapper.writeValueAsString(veicoloDto));
+
+		MvcResult result = mockMvc.perform(requestBuilder)
+				.andDo(print())
+			    .andExpect(status().isBadRequest())
+			    .andReturn();
+		
+//		VeicoloDto veicoloResult  = objectMapper.readValue(result.getResponse().getContentAsString(), VeicoloDto.class);
+//		assertEquals(veicoloDto.getTarga(), veicoloResult.getTarga());
+
+		
+	}
+	
+	@Test
 	void deleteVeicolo() throws Exception {
 	    
 	    AccessTokenDto atDto = getToken();
-
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/car/AB123CD")
+	    
+	    //doNothing().when(veicoloService).deleteVeicolo(Mockito.anyString(), Mockito.anyString());
+	    
+	    RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/car/AB123CD")
 				.accept(MediaType.APPLICATION_JSON)
 				.header("Authorization", "Bearer " + atDto.getAccessToken());
 
@@ -187,6 +218,30 @@ class DemoBolloApplicationTests {
 			    .andExpect(status().isOk())
 			    .andReturn();
 		
+		verify(veicoloService, times(1)).deleteVeicolo(Mockito.anyString(), Mockito.anyString());
+		
+	}
+	
+	@Test
+	void getBolloVeicolo() throws Exception {
+	    
+	    AccessTokenDto atDto = getToken();
+		BolloDto bolloDto = new BolloDto();
+		bolloDto.setTarga("AB123CD");
+
+		Mockito.when(veicoloService.retrieveBollo(Mockito.startsWith("AB123CD"), Mockito.any(TipoVeicolo.class))).thenReturn(bolloDto);
+		
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/car/AB123CD/AUTO/bollo")
+				.accept(MediaType.APPLICATION_JSON)
+				.header("Authorization", "Bearer " + atDto.getAccessToken());
+
+		MvcResult result = mockMvc.perform(requestBuilder)
+				.andDo(print())
+			    .andExpect(status().isOk())
+			    .andReturn();
+
+//		VeicoloDto veicoloResult  = objectMapper.readValue(result.getResponse().getContentAsString(), VeicoloDto.class);
+//		assertEquals(veicoloDto.getTarga(), veicoloResult.getTarga());
 		
 	}
 	
