@@ -5,8 +5,8 @@
         .module('app')
         .factory('AuthenticationService', AuthenticationService);
 
-    AuthenticationService.$inject = ['$http', '$httpParamSerializerJQLike', '$localStorage'];
-    function AuthenticationService($http, $httpParamSerializerJQLike, $localStorage) {
+    AuthenticationService.$inject = ['$http', '$httpParamSerializerJQLike', '$localStorage', '$location'];
+    function AuthenticationService($http, $httpParamSerializerJQLike, $localStorage, $location) {
         var service = {};
 
         service.login = login;
@@ -15,11 +15,14 @@
         return service;
 
         function login(username, password) {
+
+            let host = $location.host();
+            console.log("@@@@@@host@@@@@ "+host);
             //http://localhost:8085/realms/SpringBootKeycloak/protocol/openid-connect/token
 
             // $http.post('/api/authenticate', { username: username, password: password })
             return $http({
-                url: 'http://172.30.231.105:8085/realms/SpringBootKeycloak/protocol/openid-connect/token',
+                url: 'http://'+host+':8085/realms/SpringBootKeycloak/protocol/openid-connect/token',
                 method: 'POST',
                 data: $httpParamSerializerJQLike({client_id: "login-app", username: username, password: password, grant_type: "password"}),
                 headers: {

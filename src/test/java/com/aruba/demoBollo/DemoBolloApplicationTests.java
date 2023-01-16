@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -43,6 +44,9 @@ import reactor.core.publisher.Mono;
 @WebMvcTest(value = VeicoloRestController.class)
 
 class DemoBolloApplicationTests {
+	
+	@Autowired
+	private Environment env;
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -252,8 +256,8 @@ class DemoBolloApplicationTests {
 	    params.add("client_id", "login-app");
 	    params.add("username", "enricopero");
 	    params.add("password", "password");
-	    
-		URI tokenUri = UriComponentsBuilder.fromUriString("http://172.30.231.105:8085/realms/SpringBootKeycloak/protocol/openid-connect/token").build().toUri();
+	    String host = env.getProperty("server.ip");
+		URI tokenUri = UriComponentsBuilder.fromUriString("http://"+host+":8085/realms/SpringBootKeycloak/protocol/openid-connect/token").build().toUri();
 		WebClient webClient = WebClient.create();
 		ResponseEntity<AccessTokenDto> response = webClient.post()
 								  .uri(tokenUri)
