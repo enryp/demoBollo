@@ -253,7 +253,7 @@ class DemoBolloApplicationTests {
 	    params.add("username", "enricopero");
 	    params.add("password", "password");
 	    
-		URI tokenUri = UriComponentsBuilder.fromUriString("http://localhost:8085/realms/SpringBootKeycloak/protocol/openid-connect/token").build().toUri();
+		URI tokenUri = UriComponentsBuilder.fromUriString("http://172.30.231.105:8085/realms/SpringBootKeycloak/protocol/openid-connect/token").build().toUri();
 		WebClient webClient = WebClient.create();
 		ResponseEntity<AccessTokenDto> response = webClient.post()
 								  .uri(tokenUri)

@@ -19,7 +19,7 @@
 
             // $http.post('/api/authenticate', { username: username, password: password })
             return $http({
-                url: 'http://localhost:8085/realms/SpringBootKeycloak/protocol/openid-connect/token',
+                url: 'http://172.30.231.105:8085/realms/SpringBootKeycloak/protocol/openid-connect/token',
                 method: 'POST',
                 data: $httpParamSerializerJQLike({client_id: "login-app", username: username, password: password, grant_type: "password"}),
                 headers: {
