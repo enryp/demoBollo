@@ -29,7 +29,7 @@ import com.aruba.demoBollo.service.VeicoloServiceImpl;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:8080"})
+//@CrossOrigin(origins = {"http://localhost:8080"})
 @RequestMapping("/api")
 public class VeicoloRestController {
 	
