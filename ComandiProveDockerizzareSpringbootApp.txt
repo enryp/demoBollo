@@ -1,0 +1,22 @@
+#per avviare dockercompose
+cd /mnt/d/eclipsespring_workspace/demoBollo/docker
+docker-compose up -d
+docker-compose down
+
+#compilare il jar app
+cd /mnt/d/eclipsespring_workspace/demoBollo
+mvn clean package -DskipTests
+mvn clean package
+mvn -DHOST=172.30.231.105 clean package
+
+#Avviare app in locale
+mvn spring-boot:run 
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-DHOST=172.30.231.105"
+java -jar -DHOST=172.30.231.105 target/demoBollo-0.0.1-SNAPSHOT.jar
+
+#creare immagine docker app
+docker build -f ./docker/Dockerfile -t demo-spring-app .
+
+#avviare immagine
+docker run -p 8080:8080 -d demo-spring-app
+docker run -e ENV_OPTS="-DHOST=172.30.231.105 -Dlogging.level.org.springframework=DEBUG" -p 8080:8080 -d demo-spring-app
