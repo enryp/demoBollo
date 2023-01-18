@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title>AngularJS JWT Authentication Example & Tutorial</title>
+
+    <!-- bootstrap css -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- application css -->
+    <link href="app-content/app.css" rel="stylesheet" />
+    <link href="app-content/main.css" rel="stylesheet" />
+    
+</head>
+<body>
+    <!-- main app container -->
+    <div class="jumbotron">
+        <div class="container">
+            <div class="col-sm-8 col-sm-offset-2">
+                <ui-view></ui-view>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- angular scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+    <script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.1/ui-bootstrap-tpls.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+    <!-- application scripts -->
+    <script src="app.js"></script>
+    <script src="app-services/authentication.service.js"></script>
+    <script src="app-services/car.service.js"></script>
+    <script src="app-services/flash.service.js"></script>
+    <script src="app-services/modal.service.js"></script>
+    <script src="home/home.controller.js"></script>
+    <script src="login/login.controller.js"></script>
+    <script src="detail/view/carDetail.controller.js"></script>
+    <script src="detail/add/carAdd.controller.js"></script>
+    <script src="detail/edit/carEdit.controller.js"></script>
+
+
+</body>
+</html>
