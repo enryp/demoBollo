@@ -30,7 +30,7 @@ public class SecurityConfig {
             .authorizeRequests()
             .antMatchers("/**/*.{js,html,css}").permitAll()
             .antMatchers("/login").permitAll()
-            .antMatchers("/").permitAll()
+            //.antMatchers("/").permitAll()
             //.antMatchers(HttpMethod.GET, "/api/*").hasRole("springboot_user")
             .antMatchers("/api/*").authenticated()
             .antMatchers("/api/*").hasRole("springboot_user")
